@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-treetable/3.2.0/css/jquery.treetable.css"
+        integrity="sha512-l1bJ1VnsPD+m5ZYhfcl9PrJgbCQixXtQ/zs423QYu0w1xDGXJOSC0TmorOocaYY8md5+YMRcxZ/UgjyOSIlTYw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-treetable/3.2.0/css/jquery.treetable.theme.default.css"
+        integrity="sha512-S0Z8qdW2IlHsTsra73PQ9cTRAFIugG853UK9hkv6CZ/H6MemHuZokEQKhjtvQEQ1NpQuaheq1wcGcrY46PK9og=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Tree Table</title>
+</head>
+
+<body>
+    <div style="justify-content: center;">
+        <h4 style="justify-content: center;">Mptt and JQuery-treeTable</h4>
+        <div style="margin-top: 5%; margin-left: 5%; margin-right: 5%;">
+            <table id="example2">
+                <tbody id="genretable">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-treetable/3.2.0/jquery.treetable.js"
+    integrity="sha512-F6hdKRCotYvOPb0/9pbeJWlql7NA3R9h3K/uQnAeKoI8jy477dtZ7tgPq4EeQfAeJHxVv8HywXxmTTA2LRKcrw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $.get('http://localhost:8001/api/genre/', function (response, status) {
+            const initialData = response.data;
+            console.log(status);
+            console.log(initialData);
+            initialData.forEach(genre => {
+                const element = document.createElement('tr')
+                element.setAttribute('data-tt-id', `${genre.id}`);
+                if (genre.parent) {
+                    element.setAttribute('data-tt-parent-id', `${genre.parent}`);
+                }
+                const element1 = document.createElement('td');
+                element1.innerHTML = genre.name;
+                element.appendChild(element1);
+                const node = document.getElementById('genretable')
+                node.appendChild(element);
+            });
+            $("#example2").treetable({expandable: true, });
+        },
+
+        );
+
+        $("#example-basic-static").treetable({expandable: true, });
+        $("#example1").treetable();
+    });
+
+
+
+</script>
+
+</html>
